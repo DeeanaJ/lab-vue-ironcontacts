@@ -1,5 +1,4 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
   <h1>IronContacts</h1>
   <div class="btns">
     <button @click="randomActor">Add Random Contact</button>
@@ -27,16 +26,6 @@
     
     </tr>
   </table>
-  <!-- <div class="contact" v-for="contact in contacts.slice(0,5)" :key="contact.id">
-    <img :src="contact.pictureUrl" alt='actor'/>
-    <div>{{contact.name}}</div>
-    <div>{{contact.popularity}}</div>
-    <div v-if="contact.wonOscar">Won Oscar</div>
-    <div v-else></div>
-    <div v-if="contact.wonEmmy">Won Emmy</div>
-    <div v-else></div>
-  </div> -->
-
 </template>
 
 <script>  
@@ -49,14 +38,16 @@ export default {
       contacts: contacts,
     };
   },
-  methods: {
+  computed: {
      randomActor() {
+      const randomActor = Math.floor(Math.random() * contacts.slice(5));
+      contacts.slice(5).splice(randomActor, 1);
     },
     mostPopular() {
-      pis.contacts.slice(0,5).sort((a,b) => a.popularity > b.popularity);
+      this.contacts.slice(0,5).sort((a,b) => a.popularity > b.popularity);
     },
     alphaSort() {
-      pis.contacts.slice(0,5).sort((a,b) => a.name > b.name);
+      this.contacts.slice(0,5).sort((a,b) => a.name > b.name);
     } 
 
   }
@@ -82,6 +73,19 @@ img {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+button {
+  margin: 8px;
+
+}
+
+.header, table {
+  margin: 10px 100px;
+}
+
+td {
+  padding-left: 3em;
 }
 
 </style>
