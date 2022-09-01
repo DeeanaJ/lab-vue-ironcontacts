@@ -7,16 +7,27 @@
     <button @click="alphaSort">Sort by Name</button>
 
   </div>
-  <section class="head">
-    <h2>Picture</h2>
-    <h2>Name</h2>
-    <h2>Popularity</h2>
-    <h2>Won Oscar</h2>
-    <h2>Won Emmy</h2>
-    <h2>Actions</h2>
-  </section>
-  
-  <div class="contact" v-for="contact in firstFive" :key="contact.id">
+
+  <div class="header">
+    <p>Picture</p>
+    <p>Name</p>
+    <p>Popularity</p>
+    <p>Won Emmy</p>
+    <p>Won Oscar</p>
+    </div>
+  <table v-for="contact in contacts.slice(0,5)" :key="contact.id">
+    <tr>
+    <td><img class="pics" :src="contact.pictureUrl"></td>
+    <td>{{ contact.name }}</td>
+    <td>{{ contact.popularity.toFixed(2) }}</td>
+    <td v-if="contact.wonOscar">YES</td>
+    <td v-else></td>
+    <td v-if="contact.wonEmmy">YES</td>
+    <td v-else></td>
+    
+    </tr>
+  </table>
+  <!-- <div class="contact" v-for="contact in contacts.slice(0,5)" :key="contact.id">
     <img :src="contact.pictureUrl" alt='actor'/>
     <div>{{contact.name}}</div>
     <div>{{contact.popularity}}</div>
@@ -24,27 +35,28 @@
     <div v-else></div>
     <div v-if="contact.wonEmmy">Won Emmy</div>
     <div v-else></div>
-  </div>
+  </div> -->
 
 </template>
 
 <script>  
 import contacts from "./contacts.json";
-const actors = contacts;
-const firstFive = actors.slice(0,5);
 
 export default {
   name: "App",
+  data () {
+    return {
+      contacts: contacts,
+    };
+  },
   methods: {
      randomActor() {
-      let randomActorList = contacts.splice(5, contacts.length - 1);
-      this.firstFive.unshift(randomActorList[0]);
     },
     mostPopular() {
-      this.firstFive.sort((a,b) => a.popularity > b.popularity);
+      pis.contacts.slice(0,5).sort((a,b) => a.popularity > b.popularity);
     },
     alphaSort() {
-      this.firstFive.sort((a,b) => a.name > b.name);
+      pis.contacts.slice(0,5).sort((a,b) => a.name > b.name);
     } 
 
   }
@@ -55,10 +67,21 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smooping: antialiased;
+  -moz-osx-font-smooping: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
+
+img {
+  width: 120px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 </style>
